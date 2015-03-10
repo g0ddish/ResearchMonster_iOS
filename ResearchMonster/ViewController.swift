@@ -19,27 +19,56 @@ class ViewController: UIViewController {
     }
 
     @IBAction func loginFunction(sender: AnyObject) {
-        println("clicked" + idTextbox.text)
+       // println("clicked" + idTextbox.text)
         let id = idTextbox.text
         let pass = passTextbox.text
         let request = NSMutableURLRequest(URL: NSURL(string: "http://rm.solutionblender.ca/login")!)
         request.HTTPMethod = "POST"
+        var session = NSURLSession.sharedSession()
         let postString = "id="+id+"&password="+pass+"&mobile=1"
         request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
-        let task = NSURLSession.sharedSession().dataTaskWithRequest(request) {
-            data, response, error in
+        
             
-            if error != nil {
-                println("error=\(error)")
-                return
+        
+        var task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
+            //println("Response: \(response)")
+            var strData = NSString(data: data, encoding: NSUTF8StringEncoding)
+          //  println("Body: \(strData)")
+            var err: NSError?
+            var json = NSJSONSerialization.JSONObjectWithData(data, options: .MutableLeaves, error: &err) as? NSArray
+           // println("JSON: \(json)")
+
+            
+            var jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: nil) as NSDictionary
+            //println(jsonResult)
+            
+            // Did the JSONObjectWithData constructor return an error? If so, log the error to the console
+            if(err != nil) {
+                println(err!.localizedDescription)
+                let jsonStr = NSString(data: data, encoding: NSUTF8StringEncoding)
+                println("Error could not parse JSON: '\(jsonStr)'")
             }
-            
-            println("response = \(response)")
-            
-            
-            let responseString = NSString(data: data, encoding: NSUTF8StringEncoding)
-            println("responseString = \(responseString)")
-        }
+            else {
+                // The JSONObjectWithData constructor didn't return an error. But, we should still
+                // check and make sure that json has a value using optional binding.
+                var success = jsonResult["student_id"] as? String
+                if(success != nil){
+                  //  println("Success: \(success)")
+                    //println(jsonResult)
+                    
+                    for (index, element) in enumerate(jsonResult) {
+                        println("\(index): \(element)")
+                    }
+                
+
+                }else{
+                    println("Error could not parse JSON")
+                }
+        
+            }
+        })
+    
+      
         task.resume()
 
     }
