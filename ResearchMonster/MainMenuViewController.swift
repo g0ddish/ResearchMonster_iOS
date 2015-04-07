@@ -12,6 +12,8 @@ class MainMenuViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+          println("Loaded new")
 
         // Do any additional setup after loading the view.
     }

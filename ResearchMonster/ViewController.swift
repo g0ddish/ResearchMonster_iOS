@@ -51,6 +51,7 @@ class ViewController: UIViewController {
                     for (index, element) in enumerate(jsonResult) {
                         println("\(index): \(element)")
                     }
+                   
                 
 
                 }else{
@@ -62,12 +63,19 @@ class ViewController: UIViewController {
     
       
         task.resume()
+         self.performSegueWithIdentifier("MainMenuSeg", sender:self)
+        
 
     }
-   
-    override func didReceiveMemoryWarning() {
+    
+       override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        var user
+        
     }
 
 
