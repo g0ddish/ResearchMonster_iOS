@@ -9,11 +9,13 @@
 import UIKit
 
 class MainMenuViewController: UIViewController {
+    
+    var passvar : NSString?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-          println("Loaded new")
+          println("Here we go" + passvar!)
 
         // Do any additional setup after loading the view.
     }

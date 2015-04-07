@@ -9,13 +9,17 @@
 import UIKit
 
 class ViewController: UIViewController {
+
+
     @IBOutlet weak var loginAction: UIButton!
     @IBOutlet weak var idTextbox: UITextField!
     @IBOutlet weak var passTextbox: UITextField!
     
+    private var data: NSString = "test"
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+              // Do any additional setup after loading the view, typically from a nib.
     }
 
     @IBAction func loginFunction(sender: AnyObject) {
@@ -27,9 +31,10 @@ class ViewController: UIViewController {
         var session = NSURLSession.sharedSession()
         let postString = "id="+id+"&password="+pass+"&mobile=1"
         request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
-        var task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
+        var task = session.dataTaskWithRequest(request, completionHandler: {(data, response, error)in
         var strData = NSString(data: data, encoding: NSUTF8StringEncoding)
         var err: NSError?
+            
         var json = NSJSONSerialization.JSONObjectWithData(data, options: .MutableLeaves, error: &err) as? NSArray
         var jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: nil) as NSDictionary
             //println(jsonResult)
@@ -38,6 +43,7 @@ class ViewController: UIViewController {
             if(err != nil) {
                 println(err!.localizedDescription)
                 let jsonStr = NSString(data: data, encoding: NSUTF8StringEncoding)
+                
                 println("Error could not parse JSON: '\(jsonStr)'")
             }
             else {
@@ -47,9 +53,9 @@ class ViewController: UIViewController {
                 if(success != nil){
                   //  println("Success: \(success)")
                     //println(jsonResult)
-                    
+                    self.data = strData!
                     for (index, element) in enumerate(jsonResult) {
-                        println("\(index): \(element)")
+                      // print all here  println("\(index): \(element)")
                     }
                    
                 
@@ -59,14 +65,21 @@ class ViewController: UIViewController {
                 }
         
             }
+            NSOperationQueue.mainQueue().addOperationWithBlock {
+                self.performSegueWithIdentifier("MainMenuSeg", sender:self)
+            }
+            
         })
     
       
         task.resume()
-         self.performSegueWithIdentifier("MainMenuSeg", sender:self)
+        
+        
         
 
     }
+    
+ 
     
        override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -75,6 +88,9 @@ class ViewController: UIViewController {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
+        var datapass = self.data
+        let destvc = segue.destinationViewController as MainMenuViewController
+        destvc.passvar = datapass
     }
 
 
