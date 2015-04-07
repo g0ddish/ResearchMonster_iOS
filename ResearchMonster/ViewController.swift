@@ -22,23 +22,15 @@ class ViewController: UIViewController {
        // println("clicked" + idTextbox.text)
         let id = idTextbox.text
         let pass = passTextbox.text
-        let request = NSMutableURLRequest(URL: NSURL(string: "http://rm.solutionblender.ca/login")!)
+        let request = NSMutableURLRequest(URL: NSURL(string: "http://research.solutionblender.ca/login")!)
         request.HTTPMethod = "POST"
         var session = NSURLSession.sharedSession()
         let postString = "id="+id+"&password="+pass+"&mobile=1"
         request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
-        
-            
-        
         var task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
-            //println("Response: \(response)")
             var strData = NSString(data: data, encoding: NSUTF8StringEncoding)
-          //  println("Body: \(strData)")
             var err: NSError?
             var json = NSJSONSerialization.JSONObjectWithData(data, options: .MutableLeaves, error: &err) as? NSArray
-           // println("JSON: \(json)")
-
-            
             var jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: nil) as NSDictionary
             //println(jsonResult)
             
