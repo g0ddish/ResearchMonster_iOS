@@ -28,10 +28,10 @@ class ViewController: UIViewController {
         let postString = "id="+id+"&password="+pass+"&mobile=1"
         request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
         var task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
-            var strData = NSString(data: data, encoding: NSUTF8StringEncoding)
-            var err: NSError?
-            var json = NSJSONSerialization.JSONObjectWithData(data, options: .MutableLeaves, error: &err) as? NSArray
-            var jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: nil) as NSDictionary
+        var strData = NSString(data: data, encoding: NSUTF8StringEncoding)
+        var err: NSError?
+        var json = NSJSONSerialization.JSONObjectWithData(data, options: .MutableLeaves, error: &err) as? NSArray
+        var jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: nil) as NSDictionary
             //println(jsonResult)
             
             // Did the JSONObjectWithData constructor return an error? If so, log the error to the console
