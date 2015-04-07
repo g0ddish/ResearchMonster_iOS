@@ -55,7 +55,7 @@ class ViewController: UIViewController {
                     //println(jsonResult)
                     self.data = strData!
                     for (index, element) in enumerate(jsonResult) {
-                      // print all here  println("\(index): \(element)")
+                        println("\(index): \(element)")
                     }
                    
                 
@@ -66,8 +66,7 @@ class ViewController: UIViewController {
         
             }
             NSOperationQueue.mainQueue().addOperationWithBlock {
-                self.performSegueWithIdentifier("MainMenuSeg", sender:self)
-            }
+                self.performSegueWithIdentifier("MainMenuSeg", sender:self)            }
             
         })
     

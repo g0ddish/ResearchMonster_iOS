@@ -15,8 +15,13 @@ class MainMenuViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-          println("Here we go" + passvar!)
-
+          println("Here we go")
+        
+        let request = NSMutableURLRequest(URL: NSURL(string: "http://research.solutionblender.ca/projects?mobile=1")!)
+        
+        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) {(response, data, error) in
+            println(NSString(data:data,encoding:NSUTF8StringEncoding))
+        }
         // Do any additional setup after loading the view.
     }
 
