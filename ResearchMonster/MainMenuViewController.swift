@@ -33,7 +33,7 @@ class MainMenuViewController: UITableViewController, UITableViewDataSource, UITa
                 //println(parsedObject)
             for (index, element) in enumerate(parsedObject) {
                 println("Item \(index): \(element)")
-                self.swiftBlogs.append(parsedObject[index]["title"])
+               // self.swiftBlogs.append(parsedObject[index]["title"])
              
                
             }
