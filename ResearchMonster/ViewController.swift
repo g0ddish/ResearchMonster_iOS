@@ -55,7 +55,7 @@ class ViewController: UIViewController {
                     //println(jsonResult)
                     self.data = strData!
                     for (index, element) in enumerate(jsonResult) {
-                        println("\(index): \(element)")
+                       // println("\(index): \(element)")
                     }
                    
                 

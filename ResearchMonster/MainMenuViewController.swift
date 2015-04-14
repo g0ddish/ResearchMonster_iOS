@@ -8,9 +8,13 @@
 
 import UIKit
 
-class MainMenuViewController: UITableViewController {
+class MainMenuViewController: UITableViewController, UITableViewDataSource, UITableViewDelegate
+ {
     
     var passvar : NSString?
+    
+    let swiftBlogs = ["Ray Wenderlich", "NSHipster", "iOS Developer Tips", "Jameson Quave", "Natasha The Robot", "Coding Explorer", "That Thing In Swift", "Andrew Bancroft", "iAchieved.it", "Airspeed Velocity"]
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,8 +24,31 @@ class MainMenuViewController: UITableViewController {
         let request = NSMutableURLRequest(URL: NSURL(string: "http://research.solutionblender.ca/projects?mobile=1")!)
         
         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) {(response, data, error) in
-            println(NSString(data:data,encoding:NSUTF8StringEncoding))
+            
+            var parseError: NSError?
+            let parsedObject = NSJSONSerialization.JSONObjectWithData(data,
+                options: NSJSONReadingOptions.MutableContainers,
+                error:&parseError) as NSArray
+            
+                //println(parsedObject)
+            for (index, element) in enumerate(parsedObject) {
+                println("Item \(index): \(element)")
+                self.swiftBlogs.append(parsedObject[index]["title"])
+             
+               
+            }
+            
+         //swiftBlogs.append()
+          //      println(parsedObject.valueForKey("title"))
+           //    println(parsedObject.valueForKey("description"))
+
+        
+            
         }
+        
+        
+        tableView.delegate = self
+        tableView.dataSource = self
         // Do any additional setup after loading the view.
     }
 
@@ -46,7 +73,7 @@ class MainMenuViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1; //count(model)
+        return swiftBlogs.count
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -54,9 +81,15 @@ class MainMenuViewController: UITableViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier("mycell", forIndexPath: indexPath) as UITableViewCell
    
         let row = indexPath.row
-       // cell.textLabel?.text = "test";///swiftBlogs[row]
-        
+          cell.textLabel?.text = swiftBlogs[row]
         return cell
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        
+        let row = indexPath.row
+        println(swiftBlogs[row])
     }
 
 }
