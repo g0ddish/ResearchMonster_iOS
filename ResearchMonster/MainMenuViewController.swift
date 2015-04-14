@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MainMenuViewController: UIViewController {
+class MainMenuViewController: UITableViewController {
     
     var passvar : NSString?
 
@@ -40,5 +40,23 @@ class MainMenuViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
+     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1;
+    }
+    
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1; //count(model)
+    }
+    
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+      
+        let cell = tableView.dequeueReusableCellWithIdentifier("mycell", forIndexPath: indexPath) as UITableViewCell
+   
+        let row = indexPath.row
+       // cell.textLabel?.text = "test";///swiftBlogs[row]
+        
+        return cell
+    }
 
 }

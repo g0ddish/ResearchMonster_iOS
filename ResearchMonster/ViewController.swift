@@ -65,8 +65,8 @@ class ViewController: UIViewController {
                 }
         
             }
-            NSOperationQueue.mainQueue().addOperationWithBlock {
-                self.performSegueWithIdentifier("MainMenuSeg", sender:self)            }
+          ////  NSOperationQueue.mainQueue().addOperationWithBlock {
+           //     self.performSegueWithIdentifier("MainMenuSeg", sender:self)            }
             
         })
     
