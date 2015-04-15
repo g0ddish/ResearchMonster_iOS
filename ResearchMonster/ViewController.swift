@@ -36,7 +36,7 @@ class ViewController: UIViewController {
         var err: NSError?
             
         var json = NSJSONSerialization.JSONObjectWithData(data, options: .MutableLeaves, error: &err) as? NSArray
-        var jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: nil) as NSDictionary
+        var jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: nil) as! NSDictionary
             //println(jsonResult)
             
             // Did the JSONObjectWithData constructor return an error? If so, log the error to the console
@@ -88,8 +88,8 @@ class ViewController: UIViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
         var datapass = self.data
-        let destvc = segue.destinationViewController as MainMenuViewController
-        destvc.passvar = datapass
+       // let destvc = segue.destinationViewControlleras!s MainMenuViewController
+      //  destvc.passvar = datapass
     }
 
 

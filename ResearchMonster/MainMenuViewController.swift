@@ -13,7 +13,8 @@ class MainMenuViewController: UITableViewController, UITableViewDataSource, UITa
     
     var passvar : NSString?
     
-    let swiftBlogs = ["Ray Wenderlich", "NSHipster", "iOS Developer Tips", "Jameson Quave", "Natasha The Robot", "Coding Explorer", "That Thing In Swift", "Andrew Bancroft", "iAchieved.it", "Airspeed Velocity"]
+   var myArray = NSMutableArray()
+    var swiftBlogs = NSMutableArray()
 
 
     override func viewDidLoad() {
@@ -26,17 +27,27 @@ class MainMenuViewController: UITableViewController, UITableViewDataSource, UITa
         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) {(response, data, error) in
             
             var parseError: NSError?
-            let parsedObject = NSJSONSerialization.JSONObjectWithData(data,
+            let parsedObject : NSMutableArray = NSJSONSerialization.JSONObjectWithData(data,
                 options: NSJSONReadingOptions.MutableContainers,
-                error:&parseError) as NSArray
+                error:&parseError) as! NSMutableArray
             
                 //println(parsedObject)
             for (index, element) in enumerate(parsedObject) {
-                println("Item \(index): \(element)")
+                //println("Item \(index): \(element)")
+                var title = String()
+                title = element["title"] as! String
+            println(title)
+                self.myArray.addObject(title)
+               // self.swiftBlogs.append(title)
+                
+                //self.array.append(title)
                // self.swiftBlogs.append(parsedObject[index]["title"])
              
                
             }
+            self.swiftBlogs = self.myArray
+
+            self.tableView.reloadData()
             
          //swiftBlogs.append()
           //      println(parsedObject.valueForKey("title"))
@@ -78,10 +89,10 @@ class MainMenuViewController: UITableViewController, UITableViewDataSource, UITa
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
       
-        let cell = tableView.dequeueReusableCellWithIdentifier("mycell", forIndexPath: indexPath) as UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("mycell", forIndexPath: indexPath) as! UITableViewCell
    
         let row = indexPath.row
-          cell.textLabel?.text = swiftBlogs[row]
+          cell.textLabel?.text = swiftBlogs[row] as! String
         return cell
     }
     
